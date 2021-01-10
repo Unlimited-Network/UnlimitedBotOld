@@ -53,7 +53,8 @@ namespace MangoBotCommandsNamespace
     $"**joke:** *Tells a dad joke!*\n" +
     $"**avatar:** *Sends the avatar of the person mentioned, or yourself if nobody is mentioned.*\n" +
     $"**defaultavatar:** *Sends the default avatar of the person mentioned, or yourself if nobody is mentioned.*\n" +
-    $"**bann:** \"bann\" someone!";
+    $"**bann:** *\"bann\" someone!\n*" +
+    $"**invite:** *Get the bot's invite!*\n";
             if (!Context.IsPrivate && Context.Guild.GetUser(authorid).GuildPermissions.ManageMessages == true)
             {
                 CommandsList = (CommandsList + $"\n**Moderator Commands:**\n" +
@@ -404,6 +405,7 @@ namespace MangoBotCommandsNamespace
                     {
                            banDM += (" Please visit http://appeal.unlimitedscp.com to appeal your ban."); //If server is Unlimited, affix appeal URL to base ban message
                     }
+                    await usertobehammered.SendMessageAsync(banDM);
                     await Context.Guild.AddBanAsync(usertobehammered, 0, banre); //Adds the ban
                     await ReplyAsync($"User {usertobehammered.Mention} has been banned.");
                 } else {
@@ -432,6 +434,11 @@ namespace MangoBotCommandsNamespace
             {
                 await ReplyAsync($"Banned {bannedfool.Nickname ?? bannedfool.Username} for {banre}!");
             }
+        }
+        [Command("invite")]
+        private async Task invite()
+        {
+            await Context.Message.Author.SendMessageAsync("https://discord.com/api/oauth2/authorize?client_id=762736334606696509&permissions=59396&scope=bot");
         }
     }
 }
