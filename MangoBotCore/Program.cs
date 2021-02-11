@@ -112,13 +112,6 @@ namespace MangoBotStartup
                 if (!result.IsSuccess) // If the result is unsuccessful
                 {
                     Console.WriteLine(result.ErrorReason); // Print the error to console
-                    /*if(context.Guild.Id == 741110312920678430)
-                    {
-                        string[] replies = { "TELL ME MORE!", "FEED ME KNOWLEDGE!", "what are you talking about? TELL ME YOU FIEND!", "jokes on you, it wasn't my choice to join this conversation, while I'm here, let me just quickly bother <@174401175653711872>"};
-                        Random rand = new Random(); //Creates a random veriable
-                        int reply = rand.Next(replies.Length); //Select one of the two options that it can pick from
-                        await message.Channel.SendMessageAsync(replies[reply]);
-                    }*/
                     //await message.Channel.SendMessageAsync(result.ErrorReason);
                 }
             }
