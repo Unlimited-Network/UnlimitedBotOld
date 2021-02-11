@@ -20,7 +20,7 @@ namespace UnlimitedBotCore {
 
         public bool SaveData() {
             try {
-                File.WriteAllText(Extensions.GetFilePath(UserId), JsonConvert.SerializeObject(Data));
+                File.WriteAllText(Program.GetPath(UserId), JsonConvert.SerializeObject(Data));
                 return true;
             } catch(Exception e) {
                 Console.WriteLine($"{e.Message}\n{e.StackTrace}");
@@ -29,7 +29,7 @@ namespace UnlimitedBotCore {
         }
 
         public bool LoadData() {
-            var path = Extensions.GetFilePath(UserId);
+            var path = Program.GetPath(UserId);
 
             if(!Directory.Exists(Extensions.GetDirectoryPath())) {
                 Directory.CreateDirectory(Extensions.GetDirectoryPath());

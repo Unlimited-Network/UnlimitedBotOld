@@ -1,8 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Exiled.API.Features;
-using MangoBotCommandsNamespace;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
@@ -10,8 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace MangoBotStartup
-{
+namespace UnlimitedBotCore {
     class Program
     {
         static void Main(string[] args)
@@ -19,6 +16,8 @@ namespace MangoBotStartup
             new Program().RunBot().GetAwaiter().GetResult();
         }
 
+        public static string AppData { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static string GetPath(string userId) => Path.Combine(AppData, userId);
 
         // Creating the necessary variables
         public static DiscordSocketClient _client;
@@ -36,8 +35,6 @@ namespace MangoBotStartup
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
                 .BuildServiceProvider();
-
-            Paths.Reload();
 
             // Config creation/reading.
             if (!File.Exists("config.json"))

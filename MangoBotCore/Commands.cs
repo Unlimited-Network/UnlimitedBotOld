@@ -1,7 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using MangoBotStartup;
 using Mono.Options;
 using Newtonsoft.Json;
 using System;
@@ -12,8 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using unirest_net.http;
 
-namespace MangoBotCommandsNamespace
-{
+namespace UnlimitedBotCore {
     public class PPSize
     {
         public Dictionary<ulong, int> ppsize { get; set; } = new Dictionary<ulong, int>();
@@ -27,7 +25,7 @@ namespace MangoBotCommandsNamespace
         private async Task Load(params string[] args) {
             if (Context.User.Id == 287778194977980416 || Context.User.Id == 267761639393067008)
             {
-                var player = new UnlimitedBotCore.Player(args[0]);
+                var player = new Player(args[0]);
                 await ReplyAsync($"{args[0]}: {player.Data.Minutes}m \"{player.Data.Club}\"");
             }
         }
