@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Exiled.API.Features;
 using MangoBotCommandsNamespace;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -36,7 +37,7 @@ namespace MangoBotStartup
                 .AddSingleton(_commands)
                 .BuildServiceProvider();
 
-
+            Paths.Reload();
 
             // Config creation/reading.
             if (!File.Exists("config.json"))

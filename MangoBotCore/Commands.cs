@@ -23,6 +23,12 @@ namespace MangoBotCommandsNamespace
     {
         private BotConfig config;
 
+        [Command("load")]
+        private async Task Load(params string[] args) {
+            var player = new UnlimitedBotCore.Player(args[0]);
+            await ReplyAsync($"{args[0]}: {player.Data.Minutes}m \"{player.Data.Club}\"");
+        }
+
         [Command("ping")]
         private async Task Ping(params string[] args)
         {
