@@ -84,8 +84,8 @@ namespace MangoBotCommandsNamespace
         [Command("about")]
         private async Task about()
         {
-            await ReplyAsync("Made by lXxMangoxXl#8878\n" +
-                "https://github.com/lXxMangoxXl/MangoBot/ \n" +
+            await ReplyAsync("Made by `lXxMangoxXl#8878` and `Beryl#6677`\n" +
+                "Fork of https://github.com/lXxMangoxXl/MangoBot/ \n" +
                 "Made with Discord.Net, C#, and lots of love!");
         }
         [Command("minecraft")]
