@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 namespace UnlimitedBotCore {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -17,7 +17,8 @@ namespace UnlimitedBotCore {
         }
 
         public static string AppData { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        public static string GetPath(string userId) => Path.Combine(AppData, userId);
+        public static string Data { get; private set; } = Path.Combine(AppData, "Data");
+        public static string GetPlayer(string userId) => Path.Combine(Data, userId);
 
         // Creating the necessary variables
         public static DiscordSocketClient _client;

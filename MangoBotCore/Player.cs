@@ -20,7 +20,7 @@ namespace UnlimitedBotCore {
 
         public bool SaveData() {
             try {
-                File.WriteAllText(Program.GetPath(UserId), JsonConvert.SerializeObject(Data));
+                File.WriteAllText(Program.GetPlayer(UserId), JsonConvert.SerializeObject(Data));
                 return true;
             } catch(Exception e) {
                 Console.WriteLine($"{e.Message}\n{e.StackTrace}");
@@ -29,11 +29,11 @@ namespace UnlimitedBotCore {
         }
 
         public bool LoadData() {
-            var path = Program.GetPath(UserId);
-
-            if(!Directory.Exists(Extensions.GetDirectoryPath())) {
-                Directory.CreateDirectory(Extensions.GetDirectoryPath());
+            if(!Directory.Exists(Program.Data)) {
+                Directory.CreateDirectory(Program.Data);
             }
+
+            var path = Program.GetPlayer(UserId);
 
             if(!File.Exists(path)) {
                 Data = new PlayerData() { Minutes = 0, Club = "none", Mvp = 0, Escaped = 0 };
