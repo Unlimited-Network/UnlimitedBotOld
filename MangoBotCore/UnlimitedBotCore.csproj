@@ -16,11 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Exiled.API">
-      <HintPath>..\..\Dependencies\UnlimitedBot\Exiled.API.dll</HintPath>
-    </Reference>
     <Reference Include="UnlimitedTweaks">
-      <HintPath>..\..\Dependencies\UnlimitedBot\UnlimitedTweaks.dll</HintPath>
+      <HintPath>E:\Entire Downloads f0lder yes yes\UnlimitedTweaks.dll</HintPath>
     </Reference>
   </ItemGroup>
 

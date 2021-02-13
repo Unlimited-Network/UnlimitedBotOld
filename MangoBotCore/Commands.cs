@@ -52,13 +52,13 @@ namespace UnlimitedBotCore {
     $"----------------------------\n" +
     $"**help:** *Displays this command.*\n" +
     $"**about:** *Displays some information about the bot!*\n";
-            if (!Context.IsPrivate && Context.Guild.GetUser(authorid).GuildPermissions.ManageMessages == true)
+            /*if (!Context.IsPrivate && Context.Guild.GetUser(authorid).GuildPermissions.ManageMessages == true)
             {
                 CommandsList = (CommandsList + $"\n**Moderator Commands:**\n" +
                     $"----------------------------\n" +
                     $"**purge:** *Purges amount of messages specified (Requires Manage Messages)*\n" +
                     $"**ban:** *Bans mentioned user with reason specified. Ex. `^ban @lXxMangoxXl Not working on MangoBot`. (Requires Ban Members)*\n");
-            }
+            }*/
             if (!Context.IsPrivate && Context.Guild.Id == 687875961995132973)
             {
                 CommandsList = (CommandsList + "**\nUnlimited SCP Commands**:\n" +
