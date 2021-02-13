@@ -16,8 +16,9 @@ namespace UnlimitedBotCore {
             new Program().RunBot().GetAwaiter().GetResult();
         }
 
-        public static string AppData { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        public static string Data { get; private set; } = Path.Combine(AppData, "Data");
+        public static string AppData { get; private set; }
+        public static string Exiled { get; private set; }
+        public static string Data { get; private set; }
         public static string GetPlayer(string userId) => Path.Combine(Data, userId);
 
         // Creating the necessary variables
@@ -36,6 +37,14 @@ namespace UnlimitedBotCore {
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
                 .BuildServiceProvider();
+
+            try {
+                AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                Exiled = Path.Combine(AppData, "EXILED");
+                Data = Path.Combine(Exiled, "Data");
+            } catch(Exception) {
+                Console.WriteLine("ERROR: Couldn't find path files.");
+            }
 
             // Config creation/reading.
             if (!File.Exists("config.json"))
