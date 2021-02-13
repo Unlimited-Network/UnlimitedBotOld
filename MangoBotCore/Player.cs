@@ -15,6 +15,7 @@ namespace UnlimitedBotCore {
         public Player(string userId) {
             UserId = userId;
 
+            Console.WriteLine("Loading player");
             LoadData();
         }
 
@@ -36,6 +37,7 @@ namespace UnlimitedBotCore {
             var path = Program.GetPlayer(UserId);
 
             if(!File.Exists(path)) {
+                Console.WriteLine("File didn't exist...");
                 Data = new PlayerData() { Minutes = 0, Club = "none", Mvp = 0, Escaped = 0 };
 
                 File.WriteAllText(path, JsonConvert.SerializeObject(Data));
@@ -47,7 +49,8 @@ namespace UnlimitedBotCore {
             } catch(Exception) {
                 Data = null;
             }
-
+            
+            Console.WriteLine("Is Data null? " + (Data == null));
             return Data != null;
         }
 
