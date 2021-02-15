@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <Reference Include="UnlimitedTweaks">
-      <HintPath>E:\Entire Downloads f0lder yes yes\UnlimitedTweaks.dll</HintPath>
+      <HintPath>..\..\GameModeSwitcher\Builds\UnlimitedTweaks.dll</HintPath>
     </Reference>
   </ItemGroup>
 
