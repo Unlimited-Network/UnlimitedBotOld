@@ -45,7 +45,6 @@ namespace UnlimitedBotCore {
             }
 
             try {
-                Console.WriteLine(path);
                 Data = JsonConvert.DeserializeObject<PlayerData>(File.ReadAllText(path));
             } catch(Exception) {
                 Data = null;
