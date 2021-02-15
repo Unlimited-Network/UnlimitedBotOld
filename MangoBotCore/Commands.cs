@@ -22,40 +22,11 @@ namespace UnlimitedBotCore {
         private BotConfig config;
 
         [Command("load")]
-        [Alias("data", "stats")]
         private async Task Load(params string[] args) {
             if (Context.User.Id == 287778194977980416 || Context.User.Id == 267761639393067008)
             {
-
-                EmbedBuilder embed = new EmbedBuilder();
-
-                if(!Player.TryGetPlayer(args[0], out var player)) {
-                    embed.Color = Color.Red;
-                    embed.Title = "Couldn't find data file.";
-                    embed.Description = $"{args[0]} could **not** be found!";
-                    await ReplyAsync(null, false, embed.Build());
-                    return;
-                }
-
-                TimeSpan pt = TimeSpan.FromMinutes(player.Data.Minutes);
-                var playedTime = string.Format("{0:D2} days, {1:D2} hours, {2:D2} minutes",
-                    pt.Days,
-                    pt.Hours,
-                    pt.Minutes);
-
-                embed.Color = Color.Green;
-                embed.Title = $"Stats for: {player.UserId}";
-                embed.AddField("Time played:", playedTime);
-                embed.AddField("MVP Awards:", $"{player.Data.Mvp} times as MVP.");
-
-                if(Context.Channel is IPrivateChannel) {
-                    await ReplyAsync(null, false, embed.Build());
-                    return;
-                } else {
-                    await Context.Message.DeleteAsync();
-                    await ReplyAsync("**This command should only be used in DMs.**");
-                    await Context.User.SendMessageAsync(null, false, embed.Build());
-                }
+                var player = new Player(args[0]);
+                await ReplyAsync($"{args[0]}: {player.Data.Minutes}m \"{player.Data.Club}\"");
             }
         }
 
