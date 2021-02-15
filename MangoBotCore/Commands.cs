@@ -17,13 +17,14 @@ namespace UnlimitedBotCore {
     }
 
     public class Commands : ModuleBase<SocketCommandContext> {
-        private BotConfig config;
+        private BotConfig config = JsonConvert.DeserializeObject<BotConfig>(File.ReadAllText("config.json"));
+
+        public bool IsDev() => Context.User.Id == 287778194977980416 || Context.User.Id == 267761639393067008;
 
         [Command("load")]
         [Alias("data", "stats")]
         private async Task Load(params string[] args) {
-            if(Context.User.Id == 287778194977980416 || Context.User.Id == 267761639393067008) {
-
+            if(IsDev()) {
                 EmbedBuilder embed = new EmbedBuilder();
 
                 if(!Player.TryGetPlayer(args[0], out var player)) {
@@ -56,40 +57,45 @@ namespace UnlimitedBotCore {
             }
         }
 
+        [Command("reloadconfig")]
+        private async Task ReloadConfig(params string[] args) {
+            if(IsDev()) {
+                config = JsonConvert.DeserializeObject<BotConfig>(File.ReadAllText("config.json"));
+                await ReplyAsync("**Config reloaded!**");
+            }
+        }
+
         [Command("ping")]
         private async Task Ping(params string[] args) {
             await ReplyAsync("Pong! 🏓 **" + Program._client.Latency + "ms**");
         }
+
         [Command("status")]
         [RequireOwner]
         private async Task status([Remainder] string args) {
             await Program._client.SetGameAsync($"{args}");
         }
+
         [Command("help")]
         private async Task help() {
-            ulong authorid = Context.Message.Author.Id;
-            config = JsonConvert.DeserializeObject<BotConfig>(File.ReadAllText("config.json"));
-            string prefix = config.prefix;
-            string CommandsList = $"**Commands:**\n" +
-    $"***Current Prefix is {prefix}***\n" +
-    $"----------------------------\n" +
-    $"**help:** *Displays this command.*\n" +
-    $"**about:** *Displays some information about the bot!*\n";
-            /*if (!Context.IsPrivate && Context.Guild.GetUser(authorid).GuildPermissions.ManageMessages == true)
-            {
-                CommandsList = (CommandsList + $"\n**Moderator Commands:**\n" +
-                    $"----------------------------\n" +
-                    $"**purge:** *Purges amount of messages specified (Requires Manage Messages)*\n" +
-                    $"**ban:** *Bans mentioned user with reason specified. Ex. `^ban @lXxMangoxXl Not working on MangoBot`. (Requires Ban Members)*\n");
-            }*/
+            string prefix = config.prefix, 
+                CommandsList = 
+                $"**Commands:**\n" +
+                $"***Current Prefix is \"{prefix}\"***\n" +
+                $"----------------------------\n" +
+                $"**help:** *Displays this command.*\n" +
+                $"**about:** *Displays some information about the bot!*\n";
+
             if(!Context.IsPrivate && Context.Guild.Id == 687875961995132973) {
-                CommandsList = (CommandsList + "**\nUnlimited SCP Commands**:\n" +
+                CommandsList += "**\nUnlimited SCP Commands**:\n" +
                     "----------------------------\n" +
                     "**minecraft:** *Sends the current IP of the minecraft server*\n" +
-                    "**appeal:** *Sends a invite link to the appeal discord*");
+                    "**appeal:** *Sends a invite link to the appeal discord*";
             }
+
             await ReplyAsync(CommandsList);
         }
+
         [Command("say")]
         [RequireOwner]
         private async Task say([Remainder] string args) {
