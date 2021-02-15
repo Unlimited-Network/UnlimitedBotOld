@@ -64,10 +64,6 @@ namespace UnlimitedBotCore {
             {
                 config = JsonConvert.DeserializeObject<BotConfig>(File.ReadAllText("config.json"));
             }
-            if (!File.Exists("ppsize.json"))
-            {
-                File.WriteAllText("ppsize.json", JsonConvert.SerializeObject(new PPSize()));
-            }
 
             string botToken = config.token; // Make a string for the token
 
