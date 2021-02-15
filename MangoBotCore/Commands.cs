@@ -12,6 +12,10 @@ using System.Threading.Tasks;
 using unirest_net.http;
 
 namespace UnlimitedBotCore {
+    public class PPSize
+    {
+        public Dictionary<ulong, int> ppsize { get; set; } = new Dictionary<ulong, int>();
+    }
 
     public class Commands : ModuleBase<SocketCommandContext>
     {
