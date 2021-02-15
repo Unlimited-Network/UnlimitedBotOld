@@ -22,7 +22,7 @@ namespace UnlimitedBotCore {
 
         public string UserId { get; set; }
         public PlayerData Data { get; set; }
-        
+
         public Player(string userId) {
             UserId = userId;
         }
@@ -56,7 +56,7 @@ namespace UnlimitedBotCore {
             } catch(Exception) {
                 Data = null;
             }
-            
+
             return Data != null;
         }
 

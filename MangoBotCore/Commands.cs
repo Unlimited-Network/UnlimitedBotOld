@@ -12,20 +12,17 @@ using System.Threading.Tasks;
 using unirest_net.http;
 
 namespace UnlimitedBotCore {
-    public class PPSize
-    {
+    public class PPSize {
         public Dictionary<ulong, int> ppsize { get; set; } = new Dictionary<ulong, int>();
     }
 
-    public class Commands : ModuleBase<SocketCommandContext>
-    {
+    public class Commands : ModuleBase<SocketCommandContext> {
         private BotConfig config;
 
         [Command("load")]
         [Alias("data", "stats")]
         private async Task Load(params string[] args) {
-            if (Context.User.Id == 287778194977980416 || Context.User.Id == 267761639393067008)
-            {
+            if(Context.User.Id == 287778194977980416 || Context.User.Id == 267761639393067008) {
 
                 EmbedBuilder embed = new EmbedBuilder();
 
@@ -60,19 +57,16 @@ namespace UnlimitedBotCore {
         }
 
         [Command("ping")]
-        private async Task Ping(params string[] args)
-        {
+        private async Task Ping(params string[] args) {
             await ReplyAsync("Pong! 🏓 **" + Program._client.Latency + "ms**");
         }
         [Command("status")]
         [RequireOwner]
-        private async Task status([Remainder] string args)
-        {
-             await Program._client.SetGameAsync($"{args}");
+        private async Task status([Remainder] string args) {
+            await Program._client.SetGameAsync($"{args}");
         }
         [Command("help")]
-        private async Task help()
-        {
+        private async Task help() {
             ulong authorid = Context.Message.Author.Id;
             config = JsonConvert.DeserializeObject<BotConfig>(File.ReadAllText("config.json"));
             string prefix = config.prefix;
@@ -88,8 +82,7 @@ namespace UnlimitedBotCore {
                     $"**purge:** *Purges amount of messages specified (Requires Manage Messages)*\n" +
                     $"**ban:** *Bans mentioned user with reason specified. Ex. `^ban @lXxMangoxXl Not working on MangoBot`. (Requires Ban Members)*\n");
             }*/
-            if (!Context.IsPrivate && Context.Guild.Id == 687875961995132973)
-            {
+            if(!Context.IsPrivate && Context.Guild.Id == 687875961995132973) {
                 CommandsList = (CommandsList + "**\nUnlimited SCP Commands**:\n" +
                     "----------------------------\n" +
                     "**minecraft:** *Sends the current IP of the minecraft server*\n" +
@@ -99,40 +92,34 @@ namespace UnlimitedBotCore {
         }
         [Command("say")]
         [RequireOwner]
-        private async Task say([Remainder] string args)
-        {
-            if (!Context.IsPrivate && Context.Guild.CurrentUser.GuildPermissions.ManageMessages == true)
-            {
+        private async Task say([Remainder] string args) {
+            if(!Context.IsPrivate && Context.Guild.CurrentUser.GuildPermissions.ManageMessages == true) {
                 await Context.Message.DeleteAsync();
             }
             await ReplyAsync(args);
         }
 
         [Command("about")]
-        private async Task about()
-        {
+        private async Task about() {
             await ReplyAsync("Made by `lXxMangoxXl#8878` and `Beryl#6677`\n" +
                 "Fork of https://github.com/lXxMangoxXl/MangoBot/ \n" +
                 "Made with Discord.Net, C#, and lots of love!");
         }
         [Command("minecraft")]
-        private async Task minecraft()
-        {
+        private async Task minecraft() {
             //If you're in Unlimited, send the game address, if you aren't, spit out a generic error message.
-            if (!Context.IsPrivate && Context.Guild.Id == 687875961995132973)
-            {
+            if(!Context.IsPrivate && Context.Guild.Id == 687875961995132973) {
                 await ReplyAsync("The server IP is `mc.unlimitedscp.com`");
             }
         }
         [Command("appeal")]
         [Alias("appeals")]
-        private async Task appeal()
-        {
+        private async Task appeal() {
             //If you're in Unlimited, send the invite.
-            if (!Context.IsPrivate && Context.Guild.Id == 687875961995132973)
-            {
+            if(!Context.IsPrivate && Context.Guild.Id == 687875961995132973) {
                 await ReplyAsync($"The appeal URL is http://appeal.unlimitedscp.com");
             }
+
         }
     }
 }
