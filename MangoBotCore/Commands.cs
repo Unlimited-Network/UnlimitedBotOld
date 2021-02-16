@@ -12,13 +12,14 @@ using System.Threading.Tasks;
 
 namespace UnlimitedBotCore {
     public class Commands : ModuleBase<SocketCommandContext> {
-        private BotConfig config = JsonConvert.DeserializeObject<BotConfig>(File.ReadAllText("config.json"));
+
+        public Config Config => Program.Config;
 
         public bool IsDev() => Context.User.Id == 287778194977980416 || Context.User.Id == 267761639393067008;
 
         [Command("load")]
         [Alias("data", "stats")]
-        private async Task Load(params string[] args) {
+        public async Task Load(params string[] args) {
             if(IsDev()) {
                 EmbedBuilder embed = new EmbedBuilder();
 
@@ -45,35 +46,35 @@ namespace UnlimitedBotCore {
                     await ReplyAsync(null, false, embed.Build());
                     return;
                 } else {
-                    await Context.Message.DeleteAsync();
                     await ReplyAsync("**This command should only be used in DMs.**");
                     await Context.User.SendMessageAsync(null, false, embed.Build());
+                    await Context.Message.DeleteAsync();
                 }
             }
         }
 
         [Command("reloadconfig")]
-        private async Task ReloadConfig(params string[] args) {
+        public async Task ReloadConfig(params string[] args) {
             if(IsDev()) {
-                config = JsonConvert.DeserializeObject<BotConfig>(File.ReadAllText("config.json"));
+                Program.Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
                 await ReplyAsync("**Config reloaded!**");
             }
         }
 
         [Command("ping")]
-        private async Task Ping(params string[] args) {
+        public async Task Ping(params string[] args) {
             await ReplyAsync("Pong! 🏓 **" + Program._client.Latency + "ms**");
         }
 
         [Command("status")]
         [RequireOwner]
-        private async Task status([Remainder] string args) {
+        public async Task status([Remainder] string args) {
             await Program._client.SetGameAsync($"{args}");
         }
 
         [Command("help")]
-        private async Task help() {
-            string prefix = config.prefix, 
+        public async Task Help() {
+            string prefix = Config.Prefix, 
                 CommandsList = 
                 $"**Commands:**\n" +
                 $"***Current Prefix is \"{prefix}\"***\n" +
@@ -93,32 +94,34 @@ namespace UnlimitedBotCore {
 
         [Command("say")]
         [RequireOwner]
-        private async Task say([Remainder] string args) {
-            if(!Context.IsPrivate && Context.Guild.CurrentUser.GuildPermissions.ManageMessages == true) {
+        public async Task Say([Remainder] string args) {
+            if(!Context.IsPrivate && Context.Guild.CurrentUser.GuildPermissions.ManageMessages) {
                 await Context.Message.DeleteAsync();
             }
             await ReplyAsync(args);
         }
 
         [Command("about")]
-        private async Task about() {
+        public async Task about() {
             await ReplyAsync("Made by `lXxMangoxXl#8878` and `Beryl#6677`\n" +
                 "Fork of https://github.com/lXxMangoxXl/MangoBot/ \n" +
                 "Made with Discord.Net, C#, and lots of love!");
         }
+
         [Command("minecraft")]
-        private async Task minecraft() {
+        public async Task Minecraft() {
             //If you're in Unlimited, send the game address, if you aren't, spit out a generic error message.
             if(!Context.IsPrivate && Context.Guild.Id == 687875961995132973) {
                 await ReplyAsync("The server IP is `mc.unlimitedscp.com`");
             }
         }
+
         [Command("appeal")]
         [Alias("appeals")]
-        private async Task appeal() {
+        public async Task Appeal() {
             //If you're in Unlimited, send the invite.
             if(!Context.IsPrivate && Context.Guild.Id == 687875961995132973) {
-                await ReplyAsync($"The appeal URL is http://appeal.unlimitedscp.com");
+                await ReplyAsync($"The appeal URL is {Config.AppealURL}");
             }
 
         }
